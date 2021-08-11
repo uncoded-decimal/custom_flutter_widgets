@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// This was originally written before Flutter 2 and null safety
+///
+/// Please refer to the article [here](https://uncoded-decimal.medium.com/making-a-custom-formfield-in-flutter-135558c22f05?source=friends_link&sk=6186a4b3919e26bfd0ca1fd4d4896601)
 class CheckBoxFormField extends FormField<bool> {
   final bool isChecked;
   final Widget label;
-  final void Function(bool) onChanged;
+  final void Function(bool?) onChanged;
   CheckBoxFormField({
-    this.isChecked,
-    this.label,
-    this.onChanged,
-    FormFieldValidator<bool> validator,
+    required this.isChecked,
+    required this.label,
+    required this.onChanged,
+    FormFieldValidator<bool>? validator,
   }) : super(
           initialValue: isChecked,
           validator: validator,
           builder: (field) {
-            void onChangedHandler(bool value) {
+            void onChangedHandler(bool? value) {
               field.didChange(value);
-              if (onChanged != null) {
-                onChanged(value);
-              }
+              onChanged(value);
             }
 
             return Container(
@@ -61,10 +62,10 @@ class CheckBoxFormField extends FormField<bool> {
 
 class _CheckBoxFormFieldState extends FormFieldState<bool> {
   @override
-  CheckBoxFormField get widget => super.widget;
+  CheckBoxFormField get widget => super.widget as CheckBoxFormField;
 
   @override
-  void didChange(bool value) {
+  void didChange(bool? value) {
     super.didChange(value);
   }
 }
