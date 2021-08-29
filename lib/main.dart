@@ -2,6 +2,8 @@ import 'package:custom_widgets/custom_transitions/coffee_pour_transition.dart';
 import 'package:custom_widgets/custom_transitions/page_2.dart';
 import 'package:flutter/material.dart';
 
+import 'custom_widgets/custom_input_border.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -87,28 +89,34 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (s) {
+                    if (s != null) {
+                      if (!s.contains('a')) {
+                        return "Why no 'a'?";
+                      }
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Homeowner's name",
+                    border: CustomInputBorder(),
+                    focusedBorder: CustomInputBorder(
+                      borderColor: Colors.blue,
+                      width: 4,
+                    ),
+                    errorBorder: CustomInputBorder(
+                      borderColor: Colors.red,
+                    ),
+                    focusedErrorBorder: CustomInputBorder(
+                      borderColor: Colors.red,
+                    ),
+                  )),
             ),
           ],
         ),
