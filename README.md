@@ -7,3 +7,6 @@ I try and make things in flutter and upload them here
 
 
 ![Custom Input Border](/media/custom_input_border.gif)
+
+
+![8 Bit Animated Input Border](/media/8bit_input_border.gif)

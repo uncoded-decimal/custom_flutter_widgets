@@ -1,5 +1,6 @@
 import 'package:custom_widgets/custom_transitions/coffee_pour_transition.dart';
 import 'package:custom_widgets/custom_transitions/page_2.dart';
+import 'package:custom_widgets/custom_widgets/8bit_animated_input_border.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_widgets/custom_input_border.dart';
@@ -49,8 +50,45 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   int _counter = 0;
+  late AnimationController _8BitController;
+  late Animation<int> _8BitTween;
+
+  @override
+  void initState() {
+    super.initState();
+    _8BitController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 3,
+      ),
+    )
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          // print("AimationStatus completed");
+          _8BitController.forward(from: 0);
+        } else if (status == AnimationStatus.dismissed) {
+          // print("AimationStatus dismissed");
+          _8BitController.forward(from: 0);
+        }
+      })
+      ..addListener(() {
+        setState(() {});
+      });
+    _8BitController.forward();
+    _8BitTween = IntTween(
+      begin: 0,
+      end: 6,
+    ).animate(_8BitController);
+  }
+
+  @override
+  void dispose() {
+    _8BitController.dispose();
+    super.dispose();
+  }
 
   void _incrementCounter() {
     Navigator.push(
@@ -115,6 +153,50 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     focusedErrorBorder: CustomInputBorder(
                       borderColor: Colors.red,
+                    ),
+                  )),
+            ),
+            Container(
+              color: Colors.black,
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (s) {
+                    if (s != null) {
+                      if (s.contains('lollipop')) {
+                        return "We don't have 'lollipop'? :,(";
+                      }
+                    }
+                    return null;
+                  },
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Pixeboy',
+                    fontSize: 25.0,
+                  ),
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Pixeboy',
+                    ),
+                    errorStyle: TextStyle(
+                      color: Colors.red,
+                      fontFamily: 'Pixeboy',
+                    ),
+                    labelText: "What flavour?",
+                    border: EightBitAnimatedInputBorder(
+                      state: _8BitTween.value,
+                    ),
+                    focusedBorder: EightBitAnimatedInputBorder(
+                      state: _8BitTween.value,
+                    ),
+                    errorBorder: EightBitAnimatedInputBorder(
+                      state: _8BitTween.value,
+                      borderColor: Colors.red,
+                    ),
+                    focusedErrorBorder: EightBitAnimatedInputBorder(
+                      state: _8BitTween.value,
+                      borderColor: Colors.redAccent,
                     ),
                   )),
             ),
