@@ -1,7 +1,9 @@
 import 'package:custom_widgets/custom_transitions/coffee_pour_transition.dart';
 import 'package:custom_widgets/custom_transitions/page_2.dart';
 import 'package:custom_widgets/custom_widgets/8bit_animated_input_border.dart';
+import 'package:custom_widgets/custom_widgets/star_shape_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'custom_widgets/custom_input_border.dart';
 
@@ -200,14 +202,49 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                   )),
             ),
+
+            /// playing around with material states
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: ElevatedButton(
+                onPressed: _incrementCounter,
+                child: Text("Get me COFFEE!"),
+                style: ButtonStyle(
+                  textStyle: MaterialStateProperty.resolveWith((states) {
+                    if (states.contains(MaterialState.hovered)) {
+                      return TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      );
+                    } else {
+                      return TextStyle();
+                    }
+                  }),
+                  elevation: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return 25.0;
+                      } else {
+                        return 10.0;
+                      }
+                    },
+                  ),
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return Colors.black;
+                      } else {
+                        return Theme.of(context).primaryColor;
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

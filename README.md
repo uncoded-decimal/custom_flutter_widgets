@@ -10,3 +10,6 @@ I try and make things in flutter and upload them here
 
 
 ![8 Bit Animated Input Border](/media/8bit_input_border.gif)
+
+
+![Material States Try out](/media/material_states.gif)
